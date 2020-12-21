@@ -1,0 +1,27 @@
+{
+  "name": "source-export",
+  "version": "0.0.1",
+  "description": "export source in one file",
+  "main": "index.js",
+  "files": [
+    "src/"
+  ],
+  "dependencies": {
+    "commander": "^6.2.1",
+    "globby": "^11.0.1",
+    "lodash": "^4.17.20"
+  },
+  "scripts": {
+    "eg": "node example/eg.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hold-baby/source-export.git"
+  },
+  "author": "hold-baby",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/hold-baby/source-export/issues"
+  },
+  "homepage": "https://github.com/hold-baby/source-export#readme"
+}
