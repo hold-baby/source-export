@@ -1,10 +1,11 @@
 {
   "name": "source-export",
-  "version": "0.0.4",
+  "version": "0.0.6",
   "description": "export source in one file",
   "main": "src/index.js",
+  "types": "src/index.d.ts",
   "files": [
-    "src/"
+    "dist"
   ],
   "dependencies": {
     "commander": "^6.2.1",
@@ -12,7 +13,8 @@
     "lodash": "^4.17.20"
   },
   "scripts": {
-    "eg": "node example/eg.js"
+    "example": "node example/example.js",
+    "build": "tsc src/*.ts -d --outDir dist"
   },
   "repository": {
     "type": "git",
@@ -23,5 +25,10 @@
   "bugs": {
     "url": "https://github.com/hold-baby/source-export/issues"
   },
-  "homepage": "https://github.com/hold-baby/source-export#readme"
+  "homepage": "https://github.com/hold-baby/source-export#readme",
+  "devDependencies": {
+    "@types/lodash": "^4.14.165",
+    "@types/node": "^14.14.14",
+    "ts-node": "^9.1.1"
+  }
 }

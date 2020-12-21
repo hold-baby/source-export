@@ -1,1 +1,0 @@
-exports.genImage = require("./image")
