@@ -1,1 +1,1 @@
-require("./image")
+exports.genImage = require("./image")

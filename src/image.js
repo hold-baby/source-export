@@ -6,7 +6,7 @@ const fs = require("fs")
 
 const exts = ["bmp","jpg","jpge","png","gif","webp"]
 
-exports.genImage = (options) => {
+module.exports = (options) => {
   const opt = Object.assign(conf, options)
   const rootDir = path.resolve(opt.input)
   const files = globby.sync(rootDir, {
