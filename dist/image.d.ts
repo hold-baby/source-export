@@ -1,2 +1,5 @@
-import { IStaticOptions } from "./config";
-export declare const genImage: (options: IStaticOptions) => void;
+import { IBaseOptions } from "./config";
+interface IGenImageOptions extends IBaseOptions {
+}
+export declare const genImage: (options: IGenImageOptions) => void;
+export {};

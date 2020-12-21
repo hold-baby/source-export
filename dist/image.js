@@ -7,7 +7,9 @@ var lodash_1 = require("lodash");
 var exts = ["bmp", "jpg", "jpge", "png", "gif", "webp"];
 var genImage = function (options) {
     var opt = lodash_1.merge(config_1.defaultOptions, options, {
-        exts: exts
+        exts: exts,
+        transfer: "O",
+        exportStart: "Img"
     });
     static_1.genStatic(opt);
 };
