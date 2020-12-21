@@ -8,7 +8,7 @@ var config_1 = require("./config");
 var utls_1 = require("./utls");
 var lodash_1 = require("lodash");
 var genStatic = function (options) {
-    var opt = lodash_1.merge(config_1.defaultOptions, options);
+    var opt = lodash_1.merge(config_1.baseOptions, options);
     var input = opt.input, output = opt.output, exts = opt.exts;
     var rootDir = path_1.resolve(input);
     var files = globby_1.sync(rootDir, {

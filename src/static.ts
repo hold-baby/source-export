@@ -1,13 +1,13 @@
 import { sync } from "globby"
 import { dirname, resolve, extname, basename } from "path"
 import { writeFileSync } from "fs"
-import { defaultOptions, IStaticOptions } from "./config"
+import { baseOptions, IStaticOptions } from "./config"
 import { toUpperCamelCase } from "./utls"
 import { merge } from "lodash"
 
 
 export const genStatic = (options: IStaticOptions) => {
-  const opt = merge(defaultOptions, options)
+  const opt = merge(baseOptions, options)
   const { input, output, exts } = opt
   const rootDir = resolve(input)
   const files = sync(rootDir, {

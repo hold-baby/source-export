@@ -7,4 +7,4 @@ export interface IStaticOptions extends IBaseOptions {
     exportStart: string;
     transfer: string;
 }
-export declare const defaultOptions: IBaseOptions;
+export declare const baseOptions: IBaseOptions;

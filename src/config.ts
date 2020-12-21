@@ -7,7 +7,7 @@ export interface IStaticOptions extends IBaseOptions {
   exportStart: string;
   transfer: string;
 }
-export const defaultOptions: IBaseOptions =  {
+export const baseOptions: IBaseOptions =  {
   input: "./",
   output: "./index.js",
   exts: []
