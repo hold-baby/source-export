@@ -1,9 +1,8 @@
-import { sync } from "globby"
-import { dirname, resolve, extname, basename, relative, join } from "path"
+import { resolve } from "path"
 import { writeFileSync } from "fs"
 import { baseOptions, IStaticOptions } from "./config"
-import { toUpperCamelCase } from "./utls"
-import { merge } from "lodash"
+import { getFiles } from "./utls"
+import { merge, Dictionary, keys } from "lodash"
 import "colors"
 
 export const genStatic = (options: IStaticOptions) => {
@@ -11,36 +10,39 @@ export const genStatic = (options: IStaticOptions) => {
   const { input, output, exts } = opt
   const inputPath = resolve(input)
   const outputPath = resolve(output)
-  const outputDir = dirname(outputPath)
 
-  const files = sync(inputPath, {
-    expandDirectories: {
-      extensions: exts
-    }
-  }).map((filepath) => {
-    const ext = extname(filepath);
-    const fileName = basename(filepath, ext);
-    const importPath = relative(outputDir, filepath)
-    const exportName = toUpperCamelCase(filepath.replace(inputPath, "").replace(ext, ""))
-    return {
-      ext,
-      fileName,
-      importPath,
-      exportName,
-      filepath
-    }
-  })
+  const files = getFiles(inputPath, outputPath, exts)
   
   if(!files.length){
     console.log("nothing");
     return
   }
+  let isErr = false
+  const errMap: Dictionary<any> = {}
   const imports: string[] = []
   const exports: string[] = []
-  files.forEach(({ importPath, exportName }) => {
+  files.forEach(({ importPath, exportName, filepath }) => {
+    const errPath = `  ${filepath}`
+    if(errMap[exportName]){
+      isErr = true
+      errMap[exportName].push(errPath)
+    }else{
+      errMap[exportName] = [errPath]
+    }
     imports.push(`import O${exportName} from "./${importPath}"`)
     exports.push(`export const Img${exportName} = O${exportName}`)
   })
+  if(isErr){
+    const errors = keys(errMap).filter(key => errMap[key].length > 1).map(key => ({
+      key,
+      error: errMap[key].join("\n")
+    }))
+    console.log(`duplicate module`.red);
+    console.log(errors.map(({ key, error }) => {
+      return [`${key}:`.green, error.yellow].join("\n")
+    }).join("\n"));
+    return
+  }
   const content = [imports.join("\n"), "", exports.join("\n")].join("\n")
   writeFileSync(outputPath, content, "utf-8")
   console.log(`generated file ${outputPath}`.green)
