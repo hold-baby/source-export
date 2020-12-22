@@ -9,7 +9,7 @@ const gen = require("../dist")
 p.version(banner(), '-v')
   .option('-i, --input <value>', 'input files dir')
   .option('-o, --output <value>', 'output filename')
-  .option('--img', 'image type', 'export images')
+  .requiredOption('--img', 'image type(only support in this vierson)')
 p.parse(process.argv);
 
 if(p.img){
