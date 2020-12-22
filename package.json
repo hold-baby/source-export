@@ -1,13 +1,17 @@
 {
   "name": "source-export",
   "version": "0.0.9",
-  "description": "export source in one file",
+  "description": "export source in a file",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
+  "bin": {
+    "exp": "bin/index.js"
+  },
   "files": [
     "dist"
   ],
   "dependencies": {
+    "colors": "^1.4.0",
     "commander": "^6.2.1",
     "globby": "^11.0.1",
     "lodash": "^4.17.20"

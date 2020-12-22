@@ -10,30 +10,36 @@ var lodash_1 = require("lodash");
 var genStatic = function (options) {
     var opt = lodash_1.merge(config_1.baseOptions, options);
     var input = opt.input, output = opt.output, exts = opt.exts;
-    var rootDir = path_1.resolve(input);
-    var files = globby_1.sync(rootDir, {
+    var inputPath = path_1.resolve(input);
+    var outputPath = path_1.resolve(output);
+    var outputDir = path_1.dirname(outputPath);
+    var files = globby_1.sync(inputPath, {
         expandDirectories: {
             extensions: exts
         }
     }).map(function (filepath) {
-        var dir = path_1.dirname(filepath).replace("" + rootDir, "");
         var ext = path_1.extname(filepath);
-        var file = path_1.basename(filepath, ext);
-        var filePath = filepath.replace("" + rootDir, "");
+        var fileName = path_1.basename(filepath, ext);
+        var importPath = path_1.relative(outputDir, filepath);
+        var exportName = utls_1.toUpperCamelCase(filepath.replace(inputPath, "").replace(ext, ""));
         return {
             ext: ext,
-            file: file,
-            dir: dir,
-            filePath: filePath
+            fileName: fileName,
+            importPath: importPath,
+            exportName: exportName,
+            filepath: filepath
         };
     });
+    if (!files.length) {
+        console.log("nothing");
+        return;
+    }
     var imports = [];
     var exports = [];
     files.forEach(function (_a) {
-        var filePath = _a.filePath, ext = _a.ext;
-        var name = utls_1.toUpperCamelCase(filePath.replace(ext, ""));
-        imports.push("import O" + name + " from \"" + filePath + "\"");
-        exports.push("export const Img" + name + " = O" + name);
+        var importPath = _a.importPath, exportName = _a.exportName;
+        imports.push("import O" + exportName + " from \"./" + importPath + "\"");
+        exports.push("export const Img" + exportName + " = O" + exportName);
     });
     var content = [imports.join("\n"), "", exports.join("\n")].join("\n");
     fs_1.writeFileSync(path_1.resolve(output), content, "utf-8");
