@@ -7,6 +7,7 @@ var fs_1 = require("fs");
 var config_1 = require("./config");
 var utls_1 = require("./utls");
 var lodash_1 = require("lodash");
+require("colors");
 var genStatic = function (options) {
     var opt = lodash_1.merge(config_1.baseOptions, options);
     var input = opt.input, output = opt.output, exts = opt.exts;
@@ -42,6 +43,7 @@ var genStatic = function (options) {
         exports.push("export const Img" + exportName + " = O" + exportName);
     });
     var content = [imports.join("\n"), "", exports.join("\n")].join("\n");
-    fs_1.writeFileSync(path_1.resolve(output), content, "utf-8");
+    fs_1.writeFileSync(outputPath, content, "utf-8");
+    console.log(("generated file " + outputPath).green);
 };
 exports.genStatic = genStatic;

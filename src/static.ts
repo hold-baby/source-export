@@ -4,6 +4,7 @@ import { writeFileSync } from "fs"
 import { baseOptions, IStaticOptions } from "./config"
 import { toUpperCamelCase } from "./utls"
 import { merge } from "lodash"
+import "colors"
 
 export const genStatic = (options: IStaticOptions) => {
   const opt = merge(baseOptions, options)
@@ -41,5 +42,6 @@ export const genStatic = (options: IStaticOptions) => {
     exports.push(`export const Img${exportName} = O${exportName}`)
   })
   const content = [imports.join("\n"), "", exports.join("\n")].join("\n")
-  writeFileSync(resolve(output), content, "utf-8")
+  writeFileSync(outputPath, content, "utf-8")
+  console.log(`generated file ${outputPath}`.green)
 }
