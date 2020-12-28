@@ -31,7 +31,7 @@ var genStatic = function (options) {
         else {
             errMap[exportName] = [errPath];
         }
-        imports.push("import O" + exportName + " from \"./" + importPath + "\"");
+        imports.push("import O" + exportName + " from \"./" + importPath.split(path_1.sep).join("/") + "\"");
         exports.push("export const Img" + exportName + " = O" + exportName);
     });
     if (isErr) {
@@ -47,7 +47,7 @@ var genStatic = function (options) {
         return;
     }
     var content = [imports.join("\n"), "", exports.join("\n")].join("\n");
-    fs_1.writeFileSync(path_1.join(outputPath), content, "utf-8");
+    fs_1.writeFileSync(outputPath, content, "utf-8");
     console.log(("generated file " + outputPath).green);
 };
 exports.genStatic = genStatic;

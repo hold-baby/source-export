@@ -1,4 +1,4 @@
-import { resolve, join } from "path"
+import { resolve, join, sep } from "path"
 import { writeFileSync } from "fs"
 import { baseOptions, IStaticOptions } from "./config"
 import { getFiles } from "./utls"
@@ -29,7 +29,7 @@ export const genStatic = (options: IStaticOptions) => {
     }else{
       errMap[exportName] = [errPath]
     }
-    imports.push(`import O${exportName} from "./${importPath}"`)
+    imports.push(`import O${exportName} from "./${importPath.split(sep).join("/")}"`)
     exports.push(`export const Img${exportName} = O${exportName}`)
   })
   if(isErr){
@@ -44,6 +44,6 @@ export const genStatic = (options: IStaticOptions) => {
     return
   }
   const content = [imports.join("\n"), "", exports.join("\n")].join("\n")
-  writeFileSync(join(outputPath), content, "utf-8")
+  writeFileSync(outputPath, content, "utf-8")
   console.log(`generated file ${outputPath}`.green)
 }
