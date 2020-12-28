@@ -14,7 +14,7 @@ export const genStatic = (options: IStaticOptions) => {
   const files = getFiles(inputPath, outputPath, exts)
   
   if(!files.length){
-    console.log("nothing");
+    console.log("No files were found");
     return
   }
   let isErr = false

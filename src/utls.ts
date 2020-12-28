@@ -1,17 +1,12 @@
-import { sync } from "globby"
-import { upperFirst, camelCase } from "lodash"
-import { dirname, resolve, extname, basename, relative, join } from "path"
+import { sync } from "glob"
+import { upperFirst, camelCase, isEmpty } from "lodash"
+import { dirname, extname, basename, relative } from "path"
 
 export const toUpperCamelCase = (str: string) => upperFirst(camelCase(str))
 
 export const getFiles = (inputPath: string, outputPath: string, exts: string[]) => {
   const outputDir = dirname(outputPath)
-
-  return sync(inputPath, {
-    expandDirectories: {
-      extensions: exts
-    }
-  }).map((filepath) => {
+  return sync(`${inputPath}${!isEmpty(exts) ? `/**/*.{${exts.join(",")}}` : ""}`).map((filepath) => {
     const ext = extname(filepath);
     const fileName = basename(filepath, ext);
     const importPath = relative(outputDir, filepath)
