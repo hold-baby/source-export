@@ -1,4 +1,4 @@
-import { resolve } from "path"
+import { resolve, join } from "path"
 import { writeFileSync } from "fs"
 import { baseOptions, IStaticOptions } from "./config"
 import { getFiles } from "./utls"
@@ -44,6 +44,6 @@ export const genStatic = (options: IStaticOptions) => {
     return
   }
   const content = [imports.join("\n"), "", exports.join("\n")].join("\n")
-  writeFileSync(outputPath, content, "utf-8")
+  writeFileSync(join(outputPath), content, "utf-8")
   console.log(`generated file ${outputPath}`.green)
 }

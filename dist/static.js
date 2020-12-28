@@ -47,7 +47,7 @@ var genStatic = function (options) {
         return;
     }
     var content = [imports.join("\n"), "", exports.join("\n")].join("\n");
-    fs_1.writeFileSync(outputPath, content, "utf-8");
+    fs_1.writeFileSync(path_1.join(outputPath), content, "utf-8");
     console.log(("generated file " + outputPath).green);
 };
 exports.genStatic = genStatic;
