@@ -12,6 +12,7 @@ var genStatic = function (options) {
     var input = opt.input, output = opt.output, exts = opt.exts;
     var inputPath = path_1.resolve(input);
     var outputPath = path_1.resolve(output);
+    console.log(inputPath);
     var files = utls_1.getFiles(inputPath, outputPath, exts);
     if (!files.length) {
         console.log("No files were found");

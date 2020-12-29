@@ -1,4 +1,4 @@
-import { resolve, join, sep } from "path"
+import { resolve, sep } from "path"
 import { writeFileSync } from "fs"
 import { baseOptions, IStaticOptions } from "./config"
 import { getFiles } from "./utls"
@@ -10,7 +10,7 @@ export const genStatic = (options: IStaticOptions) => {
   const { input, output, exts } = opt
   const inputPath = resolve(input)
   const outputPath = resolve(output)
-
+  
   const files = getFiles(inputPath, outputPath, exts)
   
   if(!files.length){
